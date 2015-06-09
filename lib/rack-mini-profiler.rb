@@ -18,6 +18,7 @@ require 'mini_profiler/storage/memory_store'
 require 'mini_profiler/storage/redis_store'
 require 'mini_profiler/storage/file_store'
 require 'mini_profiler/storage/splunk_store'
+require 'mini_profiler/storage/splunk_legacy_store'
 
 require 'mini_profiler/config'
 require 'mini_profiler/profiling_methods'
