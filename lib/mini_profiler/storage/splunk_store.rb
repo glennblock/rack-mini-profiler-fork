@@ -37,12 +37,16 @@ module Rack
           :splunk_auth => "Splunk DEADBEEF-CAFEBABE-CAFED00D",
           :host => default_host,
           :source => $0,
-          :sourcetype => "apm_ruby"
+          :sourcetype => "apm_ruby",
+          :index => "main"
         }
         options = defaults.merge params
 
         uri = URI.parse(options[:splunk_base_url] + options[:splunk_endpoint])
-        Net::HTTP.start(uri.host, uri.port) do |http|
+
+        # note if SSL is enabled, the calling app may need to disable SSL verification if the Splunk cert is not valid
+        # ie: http.verify_mode = OpenSSL::SSL::VERIFY_NONE if http.use_ssl?
+        Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
           http.use_ssl = false
           request = Net::HTTP::Post.new uri
           request.initialize_http_header({
@@ -53,7 +57,9 @@ module Rack
               "event" => j,
               "host" => options[:host],
               "source" => options[:source],
-              "sourcetype" => options[:sourcetype]
+              "sourcetype" => options[:sourcetype],
+              "index" => options[:index]
+
             }.to_json
 
             request.body = data
