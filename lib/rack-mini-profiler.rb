@@ -2,6 +2,8 @@ require 'json'
 require 'timeout'
 require 'thread'
 
+require 'splunk-sdk-ruby'
+
 require 'mini_profiler/version'
 require 'mini_profiler/asset_version'
 
@@ -18,7 +20,7 @@ require 'mini_profiler/storage/memory_store'
 require 'mini_profiler/storage/redis_store'
 require 'mini_profiler/storage/file_store'
 require 'mini_profiler/storage/splunk_store'
-require 'mini_profiler/storage/splunk_legacy_store'
+require 'mini_profiler/storage/splunk_simple_receiver_store'
 
 require 'mini_profiler/config'
 require 'mini_profiler/profiling_methods'
