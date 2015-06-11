@@ -51,8 +51,6 @@ module Rack
 
       private
       def forward_to_splunk(payload)
-        $stderr.puts payload
-
         #send the data
         [payload].each do |j|
           @index.submit(j.to_json, :sourcetype => @config[:sourcetype], :source => @config[:source], :host => @default_host, :index => @config[:index])
